@@ -1,9 +1,9 @@
-# BBB-WEB-CLIENT Template
-React-Template
+# BBB-WEB-SERVER Template
+NodeApi-Template
 ## Getting Started
 ```
 npm install
-npm run dev
+npm 
 ```
 ## Example
 
