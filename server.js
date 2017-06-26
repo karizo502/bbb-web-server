@@ -20,6 +20,12 @@ app.use(morgan('dev'));
 // Initialize passport for use
 app.use(passport.initialize());
 
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers","Origin, X-Requested-With, Content-Type, Accept, Authorization")
+  next();
+});
+
 // Home route. We'll end up changing this to our main front end index later.
 app.get('/', function(req, res) {
   res.send('Relax. We will put the home page here later.');
