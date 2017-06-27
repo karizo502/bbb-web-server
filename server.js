@@ -42,10 +42,11 @@ var apiRoutes = express.Router();
 
 // Register new users
 apiRoutes.post('/register', function(req, res) {
-  if(!req.body.email || !req.body.password) {
-    res.json({ success: false, message: 'Please enter email and password.' });
+  if(!req.body.name || !req.body.email || !req.body.password) {
+    res.json({ success: false, message: 'Please enter name and email and password.' });
   } else {
     var newUser = new User({
+      name: req.body.name,
       email: req.body.email,
       password: req.body.password
     });
