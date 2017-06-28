@@ -75,6 +75,7 @@ apiRoutes.post('/authenticate', function(req, res) {
       user.comparePassword(req.body.password, function(err, isMatch) {
         if (isMatch && !err) {
           // Create token if the password matched and no error was thrown
+          console.log(user)
           var token = jwt.sign(user, config.secret, {
             expiresIn: 10080 // in seconds
           });
