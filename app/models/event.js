@@ -17,13 +17,9 @@ var EventSchema = new mongoose.Schema({
       type : Date, 
       default: Date.now 
   },
-  images: [{
-    url: String,
-    date: {
-        type: Date,
-        default: Date.now
-        }
-    }]
+  image_path: {
+    type: String
+    }
 });
 
 module.exports = mongoose.model('Event', EventSchema);

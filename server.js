@@ -78,7 +78,10 @@ apiRoutes.post('/authenticate', function(req, res) {
         if (isMatch && !err) {
           // Create token if the password matched and no error was thrown
           console.log(user)
-          var token = jwt.sign(user, config.secret, {
+          var token = jwt.sign({
+          _id: user.get('_id'),
+          name: user.get('name')
+        }, config.secret, {
             expiresIn: 10080 // in seconds
           });
           res.json({ success: true, token: 'JWT ' + token });
@@ -105,7 +108,7 @@ apiRoutes.post('/createevent', function(req, res) {
       creator: req.body.creator,
       detail: req.body.detail,
       postdate: req.body.postdate,
-      images: req.body.images
+      image_path: req.body.image_path
     });
 
     // Attempt to save the user
