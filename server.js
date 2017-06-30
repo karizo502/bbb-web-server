@@ -8,6 +8,7 @@ var morgan = require('morgan');
 var passport = require('passport');
 var config = require('./config/config');
 var User = require('./app/models/user');
+var Event = require('./app/models/event');
 var jwt = require('jsonwebtoken');
 
 // Use body-parser to get POST requests for API use
@@ -32,6 +33,7 @@ app.get('/', function(req, res) {
 });
 
 // Connect to database
+mongoose.Promise = global.Promise;
 mongoose.connect(config.database);
 
 // Bring in defined Passport Strategy
@@ -91,6 +93,37 @@ apiRoutes.post('/authenticate', function(req, res) {
 // Protect dashboard route with JWT
 apiRoutes.get('/dashboard', passport.authenticate('jwt', { session: false }), function(req, res) {
   res.send('It worked! User id is: ' + req.user._id + '.');
+});
+
+// create new event
+apiRoutes.post('/createevent', function(req, res) {
+  if(!req.body.event_name || !req.body.creator) {
+    res.json({ success: false, message: 'Please enter event_name and creator.' });
+  } else {
+    var newEvent = new Event({
+      event_name: req.body.event_name,
+      creator: req.body.creator,
+      detail: req.body.detail,
+      postdate: req.body.postdate,
+      images: req.body.images
+    });
+
+    // Attempt to save the user
+    newEvent.save(function(err) {
+      if (err) {
+        return res.json({ err:err ,success: false, message: 'That event name already exists.'});
+      }
+      res.json({ success: true, message: 'Successfully created new event.' });
+    });
+  }
+});
+
+// get event list
+apiRoutes.get('/geteventlist', passport.authenticate('jwt', { session: false }), function(req, res) {
+  Event.find({}, function (err, events) {
+        res.json(events);
+        //console.log(events);
+    });
 });
 
 // Set url for API group routes
