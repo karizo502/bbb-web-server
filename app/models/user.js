@@ -17,6 +17,9 @@ var UserSchema = new mongoose.Schema({
     type: String,
     required: true
   },
+  image_path: {
+    type: String
+  },
   role: {
     type: String,
     enum: ['Client', 'Manager', 'Admin'],

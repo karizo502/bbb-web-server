@@ -80,7 +80,8 @@ apiRoutes.post('/authenticate', function(req, res) {
           console.log(user)
           var token = jwt.sign({
           _id: user.get('_id'),
-          name: user.get('name')
+          name: user.get('name'),
+          image_path: user.get('image_path')
         }, config.secret, {
             expiresIn: 10080 // in seconds
           });
@@ -123,9 +124,9 @@ apiRoutes.post('/createevent', function(req, res) {
 
 // get event list
 apiRoutes.get('/geteventlist', passport.authenticate('jwt', { session: false }), function(req, res) {
-  Event.find({}, function (err, events) {
+  Event.find({}, null,{sort: {postdate: -1}}, function (err, events) {
         res.json(events);
-        //console.log(events);
+        console.log(events);
     });
 });
 
