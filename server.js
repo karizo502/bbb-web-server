@@ -130,6 +130,14 @@ apiRoutes.get('/geteventlist', passport.authenticate('jwt', { session: false }),
     });
 });
 
+//search user
+apiRoutes.get('/searchuser', passport.authenticate('jwt', { session: false }), function(req, res) {
+  User.find({}, function (err, users) {
+        res.json(users);
+        console.log(users);
+    });
+});
+
 // Set url for API group routes
 app.use('/api', apiRoutes);
 
