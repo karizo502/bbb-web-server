@@ -19,6 +19,14 @@ apiRoutes.get('/users', passport.authenticate('jwt', { session: false }), functi
     });
 });
 
+apiRoutes.get('/users/:id', passport.authenticate('jwt', { session: false }), function(req, res) {
+  console.log(req.params.id);
+  User.find({_id:req.params.id}, function (err, user) {
+        res.status(200).json(user);
+        console.log(user);
+    });
+});
+
 // Register new users
 apiRoutes.post('/users', function(req, res) {
   if(!req.body.name || !req.body.email || !req.body.password) {
